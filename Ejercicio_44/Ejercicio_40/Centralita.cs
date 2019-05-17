@@ -75,7 +75,7 @@ namespace Entidades
 
         #region Métodos
 
-        public Centralita()
+        private Centralita()
         {
             this.listaDeLlamadas = new List<Llamada>();
         }

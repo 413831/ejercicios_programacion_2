@@ -97,9 +97,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ejercicio_40\Ejercicio_41.csproj">
+    <ProjectReference Include="..\Ejercicio_40\Ejercicio_44.csproj">
       <Project>{ea409ebc-440c-452f-87d0-fb2c75b3e09f}</Project>
-      <Name>Ejercicio_41</Name>
+      <Name>Ejercicio_44</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
