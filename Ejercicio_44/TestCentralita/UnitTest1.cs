@@ -33,12 +33,12 @@ namespace TestCentralita
         }
 
         [TestMethod]
-        public void TestLlamadaExistente()
+        public void TestLlamadaLocalExistente()
         {
             //arrange
             Centralita central;
-            Local llamadaUno;
-            Local llamadaDos;
+            Llamada llamadaUno;
+            Llamada llamadaDos;
             //act
             central = new Centralita("Emplesa");
             llamadaUno = new Local("Bernal", 30, "Rosario", 2.65f);
@@ -60,5 +60,35 @@ namespace TestCentralita
                 Assert.Fail(exception.Message);
             }
         }
+
+        [TestMethod]
+        public void TestLlamadaProvincialExistente()
+        {
+            //arrange
+            Centralita central;
+            Llamada llamadaUno;
+            Llamada llamadaDos;
+            //act
+            central = new Centralita("Emplesa");
+            llamadaUno = new Provincial("Morón", Provincial.Franja.Franja_1, 21, "Bernal");
+            llamadaDos = new Provincial("Morón", Provincial.Franja.Franja_1, 21, "Bernal");
+            try
+            {
+                central += llamadaUno;
+                central += llamadaDos;
+                Assert.Fail("No se lanzo un poronga");//Se lanza un assert exception
+            }
+            catch (AssertFailedException)//Se puede lanzar una excepcion para casos correctos
+            {
+                throw;
+            }
+            catch (CentralitaException exception)
+            {
+                //Excepcion del error buscado
+                //assert
+                Assert.Fail(exception.Message);
+            }
+        }
+
     }
 }
