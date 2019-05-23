@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Entidades
@@ -13,7 +14,7 @@ namespace Entidades
 
         private Torneo()
         {
-            this.equipos = new List<T>;
+            this.equipos = new List<T>();
         }
 
         public Torneo(String nombre):this()
@@ -26,9 +27,12 @@ namespace Entidades
         {
             foreach(Equipo auxEquipo in torneo.equipos)
             {
-
+                if(auxEquipo == equipo)
+                {
+                    return true;
+                }
             }
-            return true;
+            return false;
         }
 
         public static bool operator !=(Torneo<T> torneo, T equipo)
@@ -49,32 +53,38 @@ namespace Entidades
         {
             StringBuilder datos = new StringBuilder("");
 
-            datos.AppendFormat("Nombre del torneo: {0}", this.nombre);
+            datos.AppendFormat("\n\nNombre del torneo: {0}\n", this.nombre);
 
             foreach(Equipo equipo in this.equipos)
             {
-                datos.AppendFormat("Nombre del torneo: {0}", this.nombre);
-
+                datos.AppendFormat("\nNombre del equipo: {0}", equipo.Ficha());
             }
             return datos.ToString();
         }
-        public string CalcularPartido(T equipoUno, T equipoDos)
+        private string CalcularPartido(T equipoUno, T equipoDos)
         {
             StringBuilder datos = new StringBuilder("");
             Random resultado = new Random();
             // “[EQUIPO1] [RESULTADO1] – [RESULTADO2] [EQUIPO2]”
-            datos.AppendFormat("{0} {1} - {2} {3}", equipoUno.Nombre, resultado.Next(0, 10),
+            datos.AppendFormat("\n\n{0} {1} - {2} {3}", equipoUno.Nombre, resultado.Next(0, 10),
                                                     equipoDos.Nombre, resultado.Next(0, 10));
             return datos.ToString();
         }
 
-        public void JugarPartido()
+        public string JugarPartido()
         {
             Random seleccion = new Random();
+            T equipoUno;
+            T equipoDos;
 
-            this.CalcularPartido(this.equipos.ElementAt(seleccion.Next(0, this.equipos.Count)),
-                                this.equipos.ElementAt(seleccion.Next(0, this.equipos.Count)));
+            do
+            {
+                equipoUno = this.equipos.ElementAt(seleccion.Next(0, this.equipos.Count));
+                Thread.Sleep(2000);
+                equipoDos = this.equipos.ElementAt(seleccion.Next(0, this.equipos.Count));
+            } while (equipoUno == equipoDos);
 
+            return this.CalcularPartido(equipoUno,equipoDos);
         }
 
 

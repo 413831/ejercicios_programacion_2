@@ -62,7 +62,7 @@ namespace Entidades
         {
             StringBuilder ficha = new StringBuilder("");
 
-            ficha.AppendFormat("{0} fundado el {1}", this.Nombre, this.FechaCreacion.ToString());
+            ficha.AppendFormat("{0} fundado el {1}", this.Nombre, this.FechaCreacion.Date.ToString());
 
             return ficha.ToString();
         }

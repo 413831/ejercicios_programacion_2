@@ -20,14 +20,36 @@ namespace VistaConsola
         {
             Torneo<EquipoFutbol> torneoFutbol = new Torneo<EquipoFutbol>("Torneo Nertor Kirssner");
             Torneo<EquipoBasquet> torneoBasquet = new Torneo<EquipoBasquet>("Copa Martita Fort");
-            Equipo equipoFutbolUno = new EquipoFutbol("Sporting Pepito", DateTime.Parse("06 / 04 / 1945"));
-            Equipo equipoFutbolDos = new EquipoFutbol("Pajaros Dorados", DateTime.Parse("24 / 11 / 1968"));
-            Equipo equipoFutbolTres = new EquipoFutbol("Massachussets Plate", DateTime.Parse("07 / 07 / 1953"));
-            Equipo equipoBasketUno = new EquipoBasquet("LAMAS", DateTime.Parse("06 / 04 / 1945"));
-            Equipo equipoBasketDos = new EquipoBasquet("Deportivo Cristal", DateTime.Parse("24 / 11 / 1968"));
-            Equipo equipoBasketTres = new EquipoBasquet("Tropisports", DateTime.Parse("07 / 07 / 1953"));
+            EquipoFutbol equipoFutbolUno = new EquipoFutbol("Sporting Pepito", DateTime.Parse("06 / 04 / 1945"));
+            EquipoFutbol equipoFutbolDos = new EquipoFutbol("Pajaros Dorados", DateTime.Parse("24 / 11 / 1968"));
+            EquipoFutbol equipoFutbolTres = new EquipoFutbol("Massachussets Plate", DateTime.Parse("07 / 07 / 1953"));
+            EquipoBasquet equipoBasketUno = new EquipoBasquet("LAMAS", DateTime.Parse("06 / 04 / 1945"));
+            EquipoBasquet equipoBasketDos = new EquipoBasquet("Deportivo Cristal", DateTime.Parse("24 / 11 / 1968"));
+            EquipoBasquet equipoBasketTres = new EquipoBasquet("Tropisports", DateTime.Parse("07 / 07 / 1953"));
 
-            torneoFutbol + 
+            torneoFutbol += equipoFutbolUno;
+            torneoFutbol += equipoFutbolDos;
+            torneoFutbol += equipoFutbolTres;
+
+            torneoBasquet += equipoBasketUno;
+            torneoBasquet += equipoBasketDos;
+            torneoBasquet += equipoBasketTres;
+
+            /////Mostrar
+
+            Console.Write(torneoFutbol.Mostrar());
+            Console.Write(torneoBasquet.Mostrar());
+            
+            /////Jugar
+
+            Console.Write(torneoFutbol.JugarPartido());
+            Console.Write(torneoFutbol.JugarPartido());
+            Console.Write(torneoFutbol.JugarPartido());
+            Console.ReadKey();
+            Console.Write(torneoBasquet.JugarPartido());
+            Console.Write(torneoBasquet.JugarPartido());
+            Console.Write(torneoBasquet.JugarPartido());
+            Console.ReadKey();
 
         }
     }
