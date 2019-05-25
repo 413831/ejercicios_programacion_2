@@ -13,70 +13,24 @@ namespace TestCompetencia
         {
             //Test para evaluar que una lista esté inicializada
             //arrange
-            Competencia competencia;
+            Competencia<VehiculoCarrera> competencia;
             List<VehiculoCarrera> lista;
 
             //act
-            competencia = new Competencia(5, 5, TipoCompetencia.F1);
+            competencia = new Competencia<VehiculoCarrera>(5, 5, TipoCompetencia.F1);
             lista = competencia.ListaVehiculos;
 
             //assert
             Assert.IsNotNull(lista);
         }
 
-        [TestMethod]
-        public void TestExcepcionCompetenciaVehiculoNoValido()
-        {
-            //Test para probar el funcionamiento de la excepción con vehiculo inválido
-            //arrange
-            Competencia competencia;
-            AutoF1 auto;
-
-            //act
-            competencia = new Competencia(5, 5, TipoCompetencia.MotoCross);
-            auto = new AutoF1(4, "Mercedez Benz");
-            try
-            {
-                if(competencia + auto)
-                {}
-            }
-            catch(CompetenciaNoDisponibleException excepcion)
-            {
-                //assert
-                Assert.Fail(excepcion.Message);
-            }
-        }
-
-        [TestMethod]
-        public void TestExcepcionCompetenciaVehiculoValido()
-        {
-            //Test para probar el funcionamiento de la excepción con vehiculo válido
-            //arrange
-            Competencia competencia;
-            MotoCross moto;
-
-            //act
-            competencia = new Competencia(5, 5, TipoCompetencia.MotoCross);
-            moto = new MotoCross(2, "Mitsubishi");
-            
-            try
-            {
-                //assert
-                Assert.IsTrue(competencia + moto);
-            }
-            catch (CompetenciaNoDisponibleException excepcion)
-            {
-                Assert.Fail(excepcion.Message);
-            }
-            
-        }
 
         [TestMethod]
         public void TestVehiculoExistenteEnLista()
         {
             //Test para probar que un vehiculo ya existe en la lista
             //arrange
-            Competencia competencia = new Competencia(5, 5, TipoCompetencia.F1); ;
+            Competencia<VehiculoCarrera> competencia = new Competencia<VehiculoCarrera>(5, 5, TipoCompetencia.F1);
             VehiculoCarrera vehiculo = new AutoF1(5,"Toyota");
 
             //act
@@ -91,7 +45,7 @@ namespace TestCompetencia
         {
             //Test para probar que un vehiculo ya existe en la lista
             //arrange
-            Competencia competencia = new Competencia(5, 5, TipoCompetencia.F1); ;
+            Competencia<VehiculoCarrera> competencia = new Competencia<VehiculoCarrera>(5, 5, TipoCompetencia.F1);
             VehiculoCarrera vehiculo = new AutoF1(5, "Toyota");
 
             //act
