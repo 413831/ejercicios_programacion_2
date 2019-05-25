@@ -24,17 +24,16 @@ namespace TestCompetencia
             Assert.IsNotNull(lista);
         }
 
-
         [TestMethod]
         public void TestVehiculoExistenteEnLista()
         {
             //Test para probar que un vehiculo ya existe en la lista
             //arrange
             Competencia<VehiculoCarrera> competencia = new Competencia<VehiculoCarrera>(5, 5, TipoCompetencia.F1);
-            VehiculoCarrera vehiculo = new AutoF1(5,"Toyota");
+            AutoF1 vehiculo = new AutoF1(5, "Toyota");
 
             //act
-            if(competencia + vehiculo)//Agrego vehiculo
+            if (competencia + vehiculo)//Agrego vehiculo
             {
                 Assert.IsTrue(competencia == vehiculo);//Es true porque ya está
             }
@@ -51,7 +50,7 @@ namespace TestCompetencia
             //act
             if (competencia + vehiculo)//Agrego vehiculo
             {
-                if(competencia - vehiculo)//Quito vehiculo
+                if (competencia - vehiculo)//Quito vehiculo
                 {
                     Assert.IsTrue(competencia != vehiculo);//Es true si ya no está
                 }
@@ -59,3 +58,4 @@ namespace TestCompetencia
         }
     }
 }
+

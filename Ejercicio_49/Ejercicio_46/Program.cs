@@ -23,10 +23,6 @@ namespace Ejercicio_36
                     Console.Write("Agregado");
                 }
 
-                if (competencia + motoUno)
-                {
-                    Console.Write("Agregado");
-                }
             }
             catch(CompetenciaNoDisponibleException exception)
             {
