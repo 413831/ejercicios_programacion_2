@@ -29,12 +29,11 @@ namespace Entidades
         {
             get
             {
-
-
+                return this.tinta;
             }
             set
             {
-
+                this.tinta = value;
             }
         }
 
@@ -49,15 +48,28 @@ namespace Entidades
 
         public EscrituraWrapper Escribir(string texto)
         {
+            for(int i = 0;i < texto.Length;i++)
+            {
+                this.tinta -= 0.3f;
+            }
+            return new EscrituraWrapper(texto, this.Color);
         }
 
-        public bool Recargar()
+        public bool Recargar(int unidades)
         {
+            this.tinta += unidades;
             return true;
         }
 
+
         public override string ToString()
         {
+            StringBuilder atributos = new StringBuilder("");
+
+            atributos.AppendFormat("Clase: {0}", typeof(Boligrafo).ToString());
+            atributos.AppendFormat("Color: {0}", this.Color);
+            atributos.AppendFormat("Tinta: {0}", this.UnidadesDeEscritura);
+
             return base.ToString();
         }
 
