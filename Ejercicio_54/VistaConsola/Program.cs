@@ -24,9 +24,7 @@ namespace VistaConsola
         {
             ClaseMetodo test;
             
-            string nombreArchivo = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + 
-                                    "\\" + DateTime.Now.ToString("yyyyMMdd-Hmm") + ".txt";
-            Console.Write("Ruta de archivo: {0}", nombreArchivo);
+            string nombreArchivo = DateTime.Now.ToString("yyyyMMdd-Hmm") + ".txt";
 
             try
             {
