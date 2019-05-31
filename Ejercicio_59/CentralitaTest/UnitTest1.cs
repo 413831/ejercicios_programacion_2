@@ -4,7 +4,6 @@ using Entidades;
 
 namespace CentralitaTest
 {
-
     [TestClass]
     public class UnitTest1
     {

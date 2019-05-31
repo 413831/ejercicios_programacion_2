@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Entidades
 {
@@ -73,7 +75,7 @@ namespace Entidades
             return this.Mostrar();
         }
 
-        /*
+        /*Serializar mediante XML
          * a. Los métodos de la implementación de IGuardar en Local deberán obtener los datos de un
         archivo dado, comprobar que estos sean del tipo Local y retornar un nuevo objeto de este
         tipo. En caso de que no sea del tipo Local, lanzará la excepción InvalidCastException.
@@ -82,14 +84,31 @@ namespace Entidades
         objeto de este tipo. En caso 
          */
 
-        public bool Guardar()
+        public bool Guardar(string archivo)
         {
-            throw new NotImplementedException();
+            XmlTextWriter escritor;
+            XmlSerializer serializador = new XmlSerializer(typeof(Local));
+            
+            escritor = new XmlTextWriter(archivo, Encoding.UTF8); //REVISAR
+            serializador.Serialize(escritor, this);
+
+            return true;
         }
 
-        public Local Leer()
+        public Local Leer(string archivo)
         {
-            throw new NotImplementedException();
+            XmlTextReader lector;
+            XmlSerializer serializador = new XmlSerializer(typeof(Local));
+            //VALIDAR QUE EXISTA EL ARCHIVO
+            lector = new XmlTextReader(archivo);
+            if(archivo.Contains("Local"))
+            {
+                return (Local)serializador.Deserialize(lector);
+            }
+            else
+            {
+                throw new InvalidCastException();
+            }
         }
     }
 }
