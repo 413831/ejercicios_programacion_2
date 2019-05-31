@@ -67,7 +67,7 @@ namespace IO
                 archivo = new FileStream(ruta, FileMode.Open); // Abro archivo
                 serializador = new BinaryFormatter();
 
-                objeto = (PuntoDat)serializador.Deserialize(archivo);
+                objeto = (PuntoDat)serializador.Deserialize(archivo); //REVISAR
                 archivo.Close();
 
                 return objeto;

@@ -7,6 +7,7 @@ using System.IO;
 
 namespace IO
 {
+    [Serializable]
     public abstract class Archivo
     {
         protected virtual bool ValidarArchivo(string ruta, bool validaExistencia)

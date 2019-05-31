@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using System.IO;
 
 namespace IO
 {
-    public class PuntoTxt : Archivo, IArchivos<string>
+    public class PuntoXml : Archivo, IArchivos<string>
     {
         public bool Guardar(string ruta, string objeto)
         {
-            StreamWriter archivo;
+            XmlTextWriter archivo;
+            XmlSerializer serializador;
 
-            if(this.ValidarArchivo(ruta,true))
+            if (this.ValidarArchivo(ruta, true))
             {
-                archivo = new StreamWriter(ruta);
-                archivo.Write(objeto);
+                archivo = new XmlTextWriter(ruta, Encoding.UTF8); //Abro y codifico el XML
+                serializador = new XmlSerializer(typeof(string));
+
+                serializador.Serialize(archivo, objeto);
                 archivo.Close();
                 return true;
             }
@@ -27,27 +30,33 @@ namespace IO
 
         public bool GuardarComo(string ruta, string objeto)
         {
-            StreamWriter archivo;
+            XmlTextWriter archivo;
+            XmlSerializer serializador;
 
-            archivo = new StreamWriter(ruta);
-            archivo.Write(objeto);
+            archivo = new XmlTextWriter(ruta, Encoding.UTF8); //Abro y codifico el XML
+            serializador = new XmlSerializer(typeof(string));
+
+            serializador.Serialize(archivo, objeto);
             archivo.Close();
             return true;
         }
 
         public string Leer(string ruta)
         {
-            StreamReader archivo;
+            XmlTextReader archivo;
+            XmlSerializer serializador;
             String texto;
 
             try
             {
-                archivo = new StreamReader(ruta); //Abro
-                texto = archivo.ReadToEnd();
+                archivo = new XmlTextReader(ruta); //Abro y codifico el XML
+                serializador = new XmlSerializer(typeof(string));
+
+                texto = (String)serializador.Deserialize(archivo);
                 archivo.Close();
-                return texto; 
+                return texto; //REVISAR
             }
-            catch(FileNotFoundException exception)
+            catch (FileNotFoundException exception)
             {
                 throw new ArchivoIncorrectoException("Archivo inexistente", exception);
             }
@@ -59,13 +68,13 @@ namespace IO
             {
                 if (base.ValidarArchivo(ruta, validaExistencia))
                 {
-                    if (Path.GetExtension(ruta) == ".txt")
+                    if (Path.GetExtension(ruta) == ".xml")
                     {
                         return true;
                     }
                     else
                     {
-                        throw new ArchivoIncorrectoException("El archivo no es un .txt");
+                        throw new ArchivoIncorrectoException("El archivo no es un .xml");
                     }
                 }
                 return false;

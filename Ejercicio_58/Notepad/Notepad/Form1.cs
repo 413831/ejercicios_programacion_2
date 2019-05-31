@@ -8,12 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using IO;
 
 namespace Notepad
 {
     public partial class FormEditor : Form
     {
         string nombreArchivo;
+        PuntoTxt archivoTxt = new PuntoTxt();
+        PuntoDat archivoDat = new PuntoDat();
+        PuntoXml archivoXml = new PuntoXml();
 
         public FormEditor()
         {
@@ -23,28 +27,51 @@ namespace Notepad
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ventana = new OpenFileDialog();
-            StreamReader textoArchivo;
 
-            ventana.Filter = "Archivos de texto(.txt)|*.txt|Archivos de datos (.dat)|*.dat";
+            ventana.Filter = "Archivos de texto(.txt)|*.txt|Archivos de datos (.dat)|*.dat|Archivos XML(.xml)|*.xml";
 
             if (ventana.ShowDialog() == DialogResult.OK)
             {
-                textoArchivo = new StreamReader(ventana.FileName);
                 nombreArchivo = ventana.FileName;
-                richTextBox1.Text = textoArchivo.ReadToEnd();
-                textoArchivo.Close();
+                MessageBox.Show(ventana.FilterIndex.ToString());
+
+                switch (ventana.FilterIndex)
+                {
+                    case 1:
+                        richTextBox1.Text = archivoTxt.Leer(ventana.FileName);
+                        break;
+                    case 2:
+                        archivoDat = archivoDat.Leer(ventana.FileName); //REVISAR
+                        richTextBox1.Text = archivoDat.Contenido;
+                        break;
+                    case 3:
+                        richTextBox1.Text = archivoXml.Leer(ventana.FileName); //REVISAR
+                        break;
+                }
+            }
+            else
+            {
+                this.guardarComoToolStripMenuItem1_Click(sender, e);
             }
         }
 
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StreamWriter textoArchivo;
-
             if(File.Exists(nombreArchivo))
             {
-                textoArchivo = new StreamWriter(nombreArchivo);
-                textoArchivo.Write(richTextBox1.Text);
-                textoArchivo.Close();
+               switch(Path.GetExtension(nombreArchivo))
+                {
+                    case ".txt":
+                        archivoTxt.Guardar(nombreArchivo, richTextBox1.Text);
+                        break;
+                    case ".dat":
+                        archivoDat.Contenido = richTextBox1.Text;
+                        archivoDat.Guardar(nombreArchivo, archivoDat);
+                        break;
+                    case ".xml":
+                        archivoXml.Guardar(nombreArchivo, richTextBox1.Text);
+                        break;
+                }
             }
             else
             {
@@ -55,15 +82,24 @@ namespace Notepad
         private void guardarComoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             SaveFileDialog ventana = new SaveFileDialog();
-            StreamWriter textoArchivo;
 
-            ventana.Filter = "Archivos de texto(.txt)|*.txt|Archivos de datos (.dat)|*.dat";
+            ventana.Filter = "Archivos de texto(.txt)|*.txt|Archivos de datos (.dat)|*.dat|Archivos XML(.xml)|*.xml";
 
             if (ventana.ShowDialog() == DialogResult.OK)
             {
-                textoArchivo = new StreamWriter(ventana.FileName);
-                textoArchivo.Write(richTextBox1.Text);
-                textoArchivo.Close();
+                switch(ventana.FilterIndex)
+                {
+                    case 1 :
+                        archivoTxt.GuardarComo(ventana.FileName, richTextBox1.Text);
+                        break;
+                    case 2 :
+                        archivoDat.Contenido = richTextBox1.Text;
+                        archivoDat.GuardarComo(ventana.FileName, archivoDat); //REVISAR
+                        break;
+                    case 3:
+                        archivoXml.GuardarComo(ventana.FileName, richTextBox1.Text);
+                        break;
+                }
             }
         }
 
