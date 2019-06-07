@@ -9,12 +9,17 @@ namespace Entidades
 {
     public class PersonaDAO
     {
-        private String connectionStr = "Data Source=[Instancia Del Servidor]; " +
-            "Initial Catalog =[Nombre de la Base de Datos]; Integrated Security = True";
+        private String connectionStr = @"Data Source=LAB3PC10\SQLEXPRESS; " +
+            "Initial Catalog =BaseDeDatos_Practica; Integrated Security = True";
         private SqlConnection conexion;
         private SqlCommand comando;
         private SqlDataReader lectorBaseDeDatos;
         public List<Persona> listadoPersonas = new List<Persona>(); 
+
+        public PersonaDAO()
+        {
+            this.ConectarBaseDeDatos();
+        }
 
         private void ConectarBaseDeDatos()
         {
@@ -35,7 +40,7 @@ namespace Entidades
 
         public bool Guardar(Persona persona)
         {
-            StringBuilder comandoTexto = new StringBuilder("INSERT INTO Personas(ID,Nombre,Apellido) ");
+            StringBuilder comandoTexto = new StringBuilder("INSERT INTO Persona(ID,Nombre,Apellido) ");
             comando.CommandText = comandoTexto.AppendFormat("VALUES({0},'{1}','{2}')", 
                                                             persona.Id.ToString(), 
                                                             persona.Nombre,
@@ -58,10 +63,10 @@ namespace Entidades
             }
         }
 
-        public List<Persona> Leer(Persona persona)
+        public List<Persona> Leer()
         {
             Persona personaAuxiliar;
-            comando.CommandText = "SELECT * FROM Personas";
+            comando.CommandText = "SELECT * FROM Persona";
 
             try
             {
@@ -91,7 +96,7 @@ namespace Entidades
         public Persona LeerPorID(int id)
         {
             Persona personaAuxiliar;
-            StringBuilder comandoTexto = new StringBuilder("SELECT * FROM Personas "); 
+            StringBuilder comandoTexto = new StringBuilder("SELECT * FROM Persona "); 
             comando.CommandText = comandoTexto.AppendFormat("WHERE id = {0}",id).ToString();
 
             try
