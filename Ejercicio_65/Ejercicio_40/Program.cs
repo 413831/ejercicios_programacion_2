@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Entidades
 {
@@ -19,17 +20,23 @@ namespace Entidades
             Provincial l4 = new Provincial(Provincial.Franja.Franja_3, l2);
             // Las llamadas se irán registrando en la Centralita.
             // La centralita mostrará por pantalla todas las llamadas según las vaya registrando.
+            Simulador simulador = new Simulador(central);
+            Thread asignarLlamadas = new Thread(simulador.AgregarLlamada);
+
+            simulador.Llamadas.Add(l1);
+            simulador.Llamadas.Add(l2);
+            simulador.Llamadas.Add(l3);
+            simulador.Llamadas.Add(l4);
+
+            asignarLlamadas.Start();
+
             try
-            {
-                central += l1;
-                Console.WriteLine(central.ToString());
-                central += l2;
-                Console.WriteLine(central.ToString());
-                central += l3;
-                central.OrdenarLlamadas();
-                Console.WriteLine(central.ToString());
-                Console.WriteLine(central.Leer());
-                central += l4;
+            { 
+                //Revisar todo esto
+                Console.WriteLine(simulador.Central.ToString());
+                simulador.Central.OrdenarLlamadas();
+                Console.WriteLine(simulador.Central.ToString());
+                Console.WriteLine(simulador.Central.Leer());
             }            catch(CentralitaException exception)            {
                 Console.Write(exception.Message);
             }            Console.ReadKey();
