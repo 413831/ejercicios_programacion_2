@@ -9,6 +9,14 @@ namespace Entidades
 {
     public class MGeneral : Medico, IMedico
     {
+        public override string EstaAtendiendoA
+        {
+            get
+            {
+                return base.EstaAtendiendoA;
+            }
+        }
+
         public MGeneral(string nombre, string apellido) : base(nombre,apellido)
         {
 

@@ -45,8 +45,9 @@ namespace Entidades
 
         protected void FinalizarAtencion()
         {
-            this.AtencionFinalizada(this.pacienteActual,this);
+            this.AtencionFinalizada(this.pacienteActual,this); // Lanzo el evento del paciente actual y la instancia de médico
             this.pacienteActual = null;
+            this.hilo.Abort(); // Finalizo el hilo del paciente atendido
         }
 
         static Medico()

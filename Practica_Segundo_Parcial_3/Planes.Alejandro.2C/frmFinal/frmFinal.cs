@@ -34,6 +34,8 @@ namespace frmFinal
         {
             this.mocker = new Thread(this.MockPacientes);
             this.mocker.Start();
+            this.medicoGeneral.AtencionFinalizada += this.FinAtencion;
+            this.medicoEspecialista.AtencionFinalizada += this.FinAtencion;
         }
 
         private void frmFinal_FormClosing(object sender, FormClosingEventArgs e)
@@ -50,7 +52,7 @@ namespace frmFinal
             Thread.Sleep(5000);
             this.pacienteEnEspera.Enqueue(new Paciente("Juan Carlos", "Pérez", 2));
             Thread.Sleep(5000);
-            this.pacienteEnEspera.Enqueue(new Paciente("Manuelita", "Pepas"));
+            this.pacienteEnEspera.Enqueue(new Paciente("Manuelita", "Pepas",4));
             Thread.Sleep(5000);
             this.pacienteEnEspera.Enqueue(new Paciente("Juancito", "Lopez", 3));
             Thread.Sleep(5000);
@@ -61,7 +63,7 @@ namespace frmFinal
             paciente = this.pacienteEnEspera.Dequeue();
 
             iMedico.IniciarAtencion(paciente);
-            this.FinAtencion(paciente, (Medico)iMedico);
+            MessageBox.Show(String.Format("Está atendiendo a {0}", ((Medico)iMedico).EstaAtendiendoA));
         }
 
         private void FinAtencion(Paciente paciente, Medico medico)
@@ -71,16 +73,18 @@ namespace frmFinal
             if (this.InvokeRequired)
             {
                 FinAtencionPaciente delegado = new FinAtencionPaciente(this.FinAtencion);
-                object[] objects = new object[] { paciente, medico };
-                this.BeginInvoke(delegado, objects);
+                object[] parametros = new object[] { paciente, medico };
+
+                this.BeginInvoke(delegado, parametros);
+            }
+            else
+            {
                 MessageBox.Show(mensaje);
             }
         }
 
         private void btnMedicoGral_Click(object sender, EventArgs e)
         {
-            this.medicoGeneral.AtencionFinalizada += this.FinAtencion;
-
             if (this.pacienteEnEspera.Count > 0)
             {
                 this.AtenderPacientes(this.medicoGeneral);
@@ -89,7 +93,7 @@ namespace frmFinal
 
         private void btnMedicoEsp_Click(object sender, EventArgs e)
         {
-            this.medicoEspecialista.AtencionFinalizada += this.FinAtencion;
+            
 
             if (this.pacienteEnEspera.Count > 0)
             {

@@ -17,6 +17,14 @@ namespace Entidades
 
         private Especialidad especialidad;
 
+        public override string EstaAtendiendoA
+        {
+            get
+            {
+                return base.EstaAtendiendoA;
+            }
+        }
+
         public MEspecialista(string nombre, string apellido, Especialidad especialidad) : base(nombre,apellido)
         {
             this.especialidad = especialidad;
