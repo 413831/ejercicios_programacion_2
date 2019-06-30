@@ -20,11 +20,10 @@ namespace Entidades
        
         public bool Guardar(string rutaArchivo, T objeto)
         {
-            this.escritor = new XmlTextWriter(rutaArchivo, Encoding.UTF8);
-            this.serializador = new XmlSerializer(typeof(T));
-
             try
             {
+                this.escritor = new XmlTextWriter(rutaArchivo, Encoding.UTF8);
+                this.serializador = new XmlSerializer(typeof(T));
                 serializador.Serialize(escritor, objeto);
                 return true;
             }
@@ -35,7 +34,10 @@ namespace Entidades
             }
             finally
             {
-                escritor.Close();
+                if(escritor != null)
+                {
+                    escritor.Close();
+                }
             }
         }
 
